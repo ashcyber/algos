@@ -1,8 +1,8 @@
 function updateInventory(arr1, arr2) {
     // All inventory must be accounted for or you're fired!
     let new_arr = [...arr1,...arr2]; 
-    dict = {}; 
-    for(item of new_arr){
+    let dict = {}; 
+    for(let item of new_arr){
       if(dict[item[1]]){
         dict[item[1]]+=item[0]; 
       }else{
@@ -32,5 +32,4 @@ var newInv = [
     [7, "Toothpaste"]
 ];
 
-console.log(updateInventory(curInv, newInv));
-
+updateInventory(curInv, newInv);
