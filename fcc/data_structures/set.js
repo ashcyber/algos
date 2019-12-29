@@ -1,38 +1,87 @@
-class Set {
-  constructor() {
-  // collection will hold our set
-  this.collection = [];
-  }
+function Set() {
+  // the var collection will hold the set
+  var collection = [];
   // this method will check for the presence of an element and return true or false
-  has(element) {
-      return this.collection.indexOf(element) !== -1;
-  }
+  this.has = function(element) {
+      return (collection.indexOf(element) !== -1);
+  };
   // this method will return all the values in the set
-  values() {
-      return this.collection;
-  }
+  this.values = function() {
+      return collection;
+  };
+ // this method will add an element to the set
+  this.add = function(element) {
+      if(!this.has(element)){
+          collection.push(element);
+          return true;
+      }
+      return false;
+  };
+  // this method will remove an element from a set
+  this.remove = function(element) {
+      if(this.has(element)){
+         var index = collection.indexOf(element);
+          collection.splice(index,1);
+          return true;
+      }
+      return false;
+  };
+  // this method will return the size of the collection
+  this.size = function() {
+      return collection.length;
+  };
+  // this method will return the union of two sets
+  this.union = function(otherSet) {
+      var unionSet = new Set();
+      var firstSet = this.values();
+      var secondSet = otherSet.values();
+      firstSet.forEach(function(e){
+          unionSet.add(e);
+      });
+      secondSet.forEach(function(e){
+          unionSet.add(e);
+      });
+      return unionSet;
+  };
   // change code below this line
-  
-  // write your add method here
-  add(element){
-    if(this.has(element)){
-      return false; 
-    }else{
-      this.collection.push(element); 
-      return true; 
-    }
-  }
+  this.intersection = function(otherSet) {
 
-  // write your remove method here
-  remove(element){
-    if(this.has(element)){
-      let i = this.collection.indexOf(element); 
-      this.collection.splice(i,1); 
-    }
-  }
-  // write your size method here
-  size(){
-    return this.collection.length; 
+    let newSet = new Set(); 
+    this.values().forEach((val) => {
+      if(otherSet.values().indexOf(val) !== -1){
+        newSet.add(val);  
+      }
+    })
+    
+    return newSet; 
   }
   // change code above this line
+  this.difference = function(otherSet) { 
+    let differenceSet = new Set(); 
+    let aSet = this.values(); 
+    let bSet = otherSet.values(); 
+
+    aSet.forEach((val) => {
+      if(bSet.indexOf(val) === -1){
+        differenceSet.add(val); 
+      }
+    })
+    return differenceSet; 
+  }
+  this.subset = function(otherSet) {
+    let aSet = this.values(); 
+    let bSet = otherSet.values(); 
+
+    let isSub = true; 
+    aSet.forEach((val) => {
+      if(bSet.indexOf(val) === -1){
+        isSub = false; 
+      }
+    }); 
+
+    return isSub;
+
+  }
+
 }
+
