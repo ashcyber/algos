@@ -7,38 +7,46 @@ function LinkedList() {
     this.next = null;
   };
 
-  this.head = function(){
-    return head;
-  };
-
   this.size = function(){
     return length;
   };
 
+  this.head = function(){
+    return head;
+  };
+
   this.add = function(element){
-
-    let newNode = new Node(element); 
+    var node = new Node(element);
     if(head === null){
-      head = newNode; 
+        head = node;
+    } else {
+        var currentNode = head;
+
+        while(currentNode.next){
+            currentNode  = currentNode.next;
+        }
+
+        currentNode.next = node;
+    }
+
+    length++;
+  };
+
+  this.remove = function(element){
+    // Only change code below this line
+    let currentNode = head  
+
+    // IF CURRENT NODE IS HEAD 
+    if(currentNode.element === element){
+      head = head.next; 
     }else{
-      let curNode = head; 
-
-      while(curNode.next !== null){
-        curNode = curNode.next; 
+      while(currentNode.next){
+        if(currentNode.next.element === element){
+          currentNode.next = currentNode.next.next; 
+          break; 
+        }
+        currentNode = currentNode.next; 
       }
-
-      curNode.next = newNode; 
     }
-
-    this.size = function() { 
-      let len = 0; 
-      let curNode = head; 
-      while(curNode){
-        curNode = curNode.next; 
-        len++; 
-      }
-      return len; 
-    }
-
   };
 }
