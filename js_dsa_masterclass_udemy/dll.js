@@ -167,7 +167,39 @@ class DoublyLinkedList {
         return true; 
     }
 
+    reverse() { 
+        if(this.length === 2){ 
+            let temp = this.head; 
+            this.head = this.tail; 
+            this.tail = temp;
+
+            this.head.next = this.tail; 
+            this.tail.prev = this.head;        
+        }
+        else if(this.length > 2) { 
+            let temp = this.head; 
+            this.head = this.tail; 
+            this.tail = temp;  
+            let curNode = this.tail; 
+            let prevNode = null; 
+
+            while(curNode !== null) { 
+                let node = curNode.next; 
+                if(curNode.prev){
+                    curNode.next = prevNode; 
+                    prevNode.prev = curNode;  
+                } 
+
+                prevNode = curNode; 
+                curNode = node; 
+            }
+
+        }
+
+        this.head.prev = null; 
+        this.tail.next = null;         
+
+    }
+
 }
-
-
 
