@@ -1,19 +1,4 @@
-"""
-    Collecting Signatures 
-        - Safe Move => Selecting the right most point of the segment
-        Algorithm: 
-            - Until all segments are visited 
-            - Let prevIdx record the index of point at which it was placed: 
-                 - this is the right point point of first segment 
-            - Check if the x-coord of the prevIdx is between the next segment 
-            - If yes => mv to next segment 
-            - else update the prevIdx to right most point of new index 
-                - increment the count of counter for num of points 
-
-        Time Complexity: O(n) + O(nLogn) => O(nLogn)
-"""
-
-# Uses python3
+#!/usr/bin/python3
 import sys
 from collections import namedtuple
 

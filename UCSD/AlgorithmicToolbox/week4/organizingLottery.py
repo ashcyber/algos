@@ -1,4 +1,4 @@
-# # Uses python3
+#!/usr/bin/python3
 import sys
 
 def fast_count_segments(starts, ends, points):
