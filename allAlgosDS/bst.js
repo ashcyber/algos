@@ -34,6 +34,24 @@ class BST {
        }
     }
 
+    recursiveInsert(data){
+        let insertNode = function(node,value){
+            if(node === null) return new Node(value); 
+            
+            else if(value <= node.val) { 
+                node.left = insertNode(node.left, value); 
+            }
+            else {
+                node.right = insertNode(node.right, value); 
+            }
+
+            return node; 
+        }
+
+        this.root = insertNode(this.root, data); 
+    }
+
+
     findMinNode(node) { 
         let cur = node; 
         while(cur.left !== null) { 
