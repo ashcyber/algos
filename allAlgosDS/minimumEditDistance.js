@@ -1,3 +1,12 @@
+function getValue(arr, i, j) { 
+    if(i === -1 || j === -1){
+        return Infinity; 
+    }
+    else {
+        return arr[i][j];
+    }
+}
+
 function minimumEditDistance(start, end) { 
     start = " " + start 
     end = " " + end
@@ -22,15 +31,44 @@ function minimumEditDistance(start, end) {
             }
             else {
                 let arr = [
-                    [memo[i-1][j-1], -1,-1],
-                    [memo[i-1][j], -1,0],
-                    [memo[i][j-1],0,-1]
+                    [getValue(memo, i-1, j-1), -1,-1],
+                    [getValue(memo, i-1, j), -1,0],
+                    [getValue(memo, i, j-1),0,-1]
                 ]
                 arr.sort((a,b) => a[0] - b[0]);
                 memo[i][j] = memo[i+arr[0][1]][j+arr[0][2]] + 1; 
             }
         } 
     }
-    return memo[start.length-1][end.length - 1]
-}
 
+    // Backtracking Logic 
+    let i = start.length - 1; 
+    let j = end.length - 1; 
+    res = []; 
+    while(i > 0 || j > 0) {
+        if(start[i] === end[j]) { 
+            i = i - 1; 
+            j = j - 1; 
+        }
+        else {
+            let char = start[i]; 
+            let char2 = end[j]
+            let arr = [
+                [getValue(memo, i-1, j-1), -1,-1, "REP"],
+                [getValue(memo, i-1, j), -1,0, "DEL"],
+                [getValue(memo, i, j-1),0,-1, "INS"]
+            ]
+            arr.sort((a,b) => a[0] - b[0]); 
+            i = i + arr[0][1]; 
+            j = j + arr[0][2];  
+            let op = arr[0][3];
+
+            if(op === 'INS') { 
+                res.unshift(`${op} ${char2}`)
+            }else {
+                res.unshift(`${op} ${char}`)
+            }
+        }
+    }
+    return res; 
+}
