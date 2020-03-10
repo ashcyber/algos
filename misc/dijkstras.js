@@ -64,7 +64,7 @@ class Graph{
 }
 
 
-function dijkstras(graph, start) { 
+function dijkstras(graph, start, end) { 
     // Initialization
 
     let distances = {};
@@ -84,7 +84,10 @@ function dijkstras(graph, start) {
 
     // Main Loop 
     while(!pq.isEmpty()){
-        let { val: current_vertex } = pq.dequeue()
+        let { val: current_vertex, priority } = pq.dequeue()
+
+        if(distances[current_vertex] < priority) continue; 
+
         visited[current_vertex] = true; 
         let neighbours =  graph.getNeighbours(current_vertex); 
         
@@ -95,14 +98,24 @@ function dijkstras(graph, start) {
                 if(new_distance < distances[neighbour]) { 
                     distances[neighbour] = new_distance; 
                     previous_vertex[neighbour] = current_vertex;  
-                    pq.set(neighbour, distances[neighbour]);
+                    pq.enqueue(neighbour,distances[neighbour] )
                 }
             }
         })
     } 
 
-    console.log(distances); 
-    console.log(previous_vertex); 
+    console.log(`Distances`, distances); 
+    console.log(`Previous Vertex:`,previous_vertex); 
+    
+    let path = []; 
+    let cur_vert = end; 
+    while(previous_vertex[cur_vert] !== ""){
+        path.push(cur_vert); 
+        cur_vert = previous_vertex[cur_vert];
+    }
+    path.push(start); 
+
+    console.log(`Path: `, path.reverse().join('->')); 
 }
 
 let g = new Graph(); 
@@ -114,4 +127,4 @@ g.addEdge("C","D", 5);
 g.addEdge("B","D",1); 
 g.addEdge("D","E",3); 
 
-dijkstras(g, "A")
+dijkstras(g, "A", "E")
