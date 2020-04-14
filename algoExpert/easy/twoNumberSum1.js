@@ -1,16 +1,12 @@
 function twoNumberSum(array, targetSum) {
+  // Write your code here.
 	let hm = {}; 
-	
-	for(let i = 0; i < array.length; i++) { 
-		let keyVal = targetSum - array[i]; 
 		
-		if(hm.hasOwnProperty(array[i])) 
-			return [array[i], hm[array[i]]]
-		
-		hm[keyVal] = array[i]; 
+	for(const num of array) { 
+		if(num in hm)  
+			return [num, hm[num]]
+		hm[targetSum - num] = num
 	}
 	
-	return []; 
+	return [];
 }
-
-exports.twoNumberSum = twoNumberSum;
